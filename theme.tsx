@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import { Appearance, ViewStyle } from 'react-native';
 
-type Scheme = 'light' | 'dark';
+type Scheme = 'dark' | 'light';
 
 export type Theme = {
   colors: {
@@ -20,17 +20,7 @@ export type Theme = {
   typography: { h1: number; h3: number; body: number; button: number };
 };
 
-const light: Theme = {
-  colors: {
-    background: '#FFFFFF',
-    card: '#F7F7F9',
-    text: '#111827',
-    muted: '#6B7280',
-    primary: '#22C55E',
-    primaryAlt: '#16A34A',
-    onPrimary: '#FFFFFF',
-    border: '#E5E7EB',
-  },
+const shared = {
   spacing: { xs: 6, sm: 10, md: 14, lg: 20, xl: 28 },
   radii: { sm: 6, md: 10, lg: 14, pill: 999 },
   elevation: {
@@ -41,7 +31,7 @@ const light: Theme = {
 };
 
 const dark: Theme = {
-  ...light,
+  ...shared,
   colors: {
     background: '#0B0F14',
     card: '#121823',
@@ -51,6 +41,20 @@ const dark: Theme = {
     primaryAlt: '#16A34A',
     onPrimary: '#0B0F14',
     border: '#1F2937',
+  },
+};
+
+const light: Theme = {
+  ...shared,
+  colors: {
+    background: '#FFFFFF',
+    card: '#F7F7F9',
+    text: '#111827',
+    muted: '#6B7280',
+    primary: '#22C55E',
+    primaryAlt: '#16A34A',
+    onPrimary: '#FFFFFF',
+    border: '#E5E7EB',
   },
 };
 

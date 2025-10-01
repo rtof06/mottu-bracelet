@@ -1,4 +1,7 @@
 export type AppStackParamList = {
-  MotorcycleList: undefined;
-  PhotoCapture: undefined;
+  Home: undefined;
+  MotoList: undefined;
+  Camera: undefined;
+  // MotoCreate?: undefined;
+  // Profile?: undefined;
 };
