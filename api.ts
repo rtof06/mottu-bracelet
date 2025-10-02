@@ -6,7 +6,7 @@ export const api = axios.create({
 });
 
 export const MotoAPI = {
-  list: () => api.get('/motos'),
+  list: () => api.get('/motos/all'),
   getById: (id: string) => api.get(`/motos/${id}`),
   create: (payload: { plate: string; model: string; status: string; yardSlot: string }) =>
     api.post('/motos', payload),
