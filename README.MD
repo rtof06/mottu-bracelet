@@ -2,10 +2,13 @@
 
 # RM 556092
 RICARDO TAVARES
+@rtof06
 # RM 558186
 PEDRO ABRANTES
+@pdroandrad
 # RM RM555726
 VICTOR ALVES
+@carmowa
 
 O **Mottu Bracelet** é uma solução desenvolvida para a empresa **Mottu** visando o **gerenciamento eficiente das motos em pátios de manutenção**.  
 O sistema integra **hardware** (bracelete acoplado às motos), **backend em Java com Spring Boot + Oracle** e um **aplicativo mobile em React Native**.
