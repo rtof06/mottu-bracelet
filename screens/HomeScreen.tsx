@@ -35,9 +35,8 @@ export default function HomeScreen({ navigation }: Props) {
           onPress={() => navigation.navigate('Camera')}
           accessibilityLabel="Abrir câmera para tirar foto"
         />
-        {/* Descomente assim que as telas existirem */}
-        {/* <PrimaryButton label="Cadastrar Moto" onPress={() => navigation.navigate('MotorcycleCreate')} />
-        <PrimaryButton label="Perfil" onPress={() => navigation.navigate('Profile')} /> */}
+        <MainButton label="Cadastrar Moto" onPress={() => navigation.navigate('CreateMoto')} />
+        {/* <MainButton label="Perfil" onPress={() => navigation.navigate('Profile')} /> */}
       </View>
     </View>
   );

@@ -1,7 +1,13 @@
-import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
-import { Appearance, ViewStyle } from 'react-native';
+import React, {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
+import { Appearance, ViewStyle } from "react-native";
 
-type Scheme = 'dark' | 'light';
+type Scheme = "dark" | "light";
 
 export type Theme = {
   colors: {
@@ -24,8 +30,18 @@ const shared = {
   spacing: { xs: 6, sm: 10, md: 14, lg: 20, xl: 28 },
   radii: { sm: 6, md: 10, lg: 14, pill: 999 },
   elevation: {
-    sm: { shadowOpacity: 0.08, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 2 },
-    md: { shadowOpacity: 0.12, shadowRadius: 12, shadowOffset: { width: 0, height: 6 }, elevation: 4 },
+    sm: {
+      shadowOpacity: 0.08,
+      shadowRadius: 6,
+      shadowOffset: { width: 0, height: 2 },
+      elevation: 2,
+    },
+    md: {
+      shadowOpacity: 0.12,
+      shadowRadius: 12,
+      shadowOffset: { width: 0, height: 6 },
+      elevation: 4,
+    },
   },
   typography: { h1: 24, h3: 16, body: 14, button: 15 },
 };
@@ -33,28 +49,28 @@ const shared = {
 const dark: Theme = {
   ...shared,
   colors: {
-    background: '#0B0F14',
-    card: '#121823',
-    text: '#E5E7EB',
-    muted: '#9CA3AF',
-    primary: '#22C55E',
-    primaryAlt: '#16A34A',
-    onPrimary: '#0B0F14',
-    border: '#1F2937',
+    background: "#0B0F14",
+    card: "#121823",
+    text: "#E5E7EB",
+    muted: "#9CA3AF",
+    primary: "#22C55E",
+    primaryAlt: "#16A34A",
+    onPrimary: "#0B0F14",
+    border: "#1F2937",
   },
 };
 
 const light: Theme = {
   ...shared,
   colors: {
-    background: '#FFFFFF',
-    card: '#F7F7F9',
-    text: '#111827',
-    muted: '#6B7280',
-    primary: '#22C55E',
-    primaryAlt: '#16A34A',
-    onPrimary: '#FFFFFF',
-    border: '#E5E7EB',
+    background: "#FFFFFF",
+    card: "#F7F7F9",
+    text: "#111827",
+    muted: "#6B7280",
+    primary: "#22C55E",
+    primaryAlt: "#16A34A",
+    onPrimary: "#FFFFFF",
+    border: "#E5E7EB",
   },
 };
 
@@ -76,11 +92,12 @@ export function ThemeProvider({
   scheme: Scheme;
 }) {
   const [scheme, setScheme] = useState<Scheme>(initialScheme);
-  const [isLoggedIn, setLoggedIn] = useState<boolean>(true); // trocar para false quando Auth estiver pronta
+  const [isLoggedIn, setLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     const sub = Appearance.addChangeListener(({ colorScheme }) => {
-      if (colorScheme === 'light' || colorScheme === 'dark') setScheme(colorScheme);
+      if (colorScheme === "light" || colorScheme === "dark")
+        setScheme(colorScheme);
     });
     return () => {
       // RN >=0.65
@@ -89,10 +106,12 @@ export function ThemeProvider({
     };
   }, []);
 
-  const theme = useMemo(() => (scheme === 'dark' ? dark : light), [scheme]);
+  const theme = useMemo(() => (scheme === "dark" ? dark : light), [scheme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, scheme, setScheme, isLoggedIn, setLoggedIn }}>
+    <ThemeContext.Provider
+      value={{ theme, scheme, setScheme, isLoggedIn, setLoggedIn }}
+    >
       {children}
     </ThemeContext.Provider>
   );
@@ -100,12 +119,12 @@ export function ThemeProvider({
 
 export function useTheme() {
   const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error('useTheme must be used within ThemeProvider');
-  return ctx.theme;
+  if (!ctx) throw new Error("useTheme must be used within ThemeProvider");
+  return { ...ctx.theme, scheme: ctx.scheme, setScheme: ctx.setScheme };
 }
 
 export function useSession() {
   const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error('useSession must be used within ThemeProvider');
+  if (!ctx) throw new Error("useSession must be used within ThemeProvider");
   return { isLoggedIn: ctx.isLoggedIn, setLoggedIn: ctx.setLoggedIn };
 }

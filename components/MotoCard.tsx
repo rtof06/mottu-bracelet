@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useTheme } from '../theme';
 import { Moto } from '../types';
 
 type Props = {
   moto: Moto;
+  onPress?: () => void;
 };
 
 const statusLabel: Record<Moto['status'], string> = {
@@ -13,10 +14,10 @@ const statusLabel: Record<Moto['status'], string> = {
   PRONTA: 'Pronta',
 };
 
-export default function MotoCard({ moto }: Props) {
+export default function MotoCard({ moto, onPress }: Props) {
   const { colors, spacing, radii, typography, elevation } = useTheme();
 
-  return (
+  const Card = (
     <View
       style={{
         backgroundColor: colors.card,
@@ -35,5 +36,13 @@ export default function MotoCard({ moto }: Props) {
         Posição no pátio: {moto.yardSlot}
       </Text>
     </View>
+  );
+
+  if (!onPress) return Card;
+
+  return (
+    <Pressable onPress={onPress} android_ripple={{ color: colors.border }}>
+      {Card}
+    </Pressable>
   );
 }

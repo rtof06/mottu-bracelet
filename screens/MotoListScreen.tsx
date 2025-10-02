@@ -6,7 +6,7 @@ import MainButton from '../components/MainButton';
 import { useTheme } from '../theme';
 import { styles } from '../styles';
 import { Moto } from '../types';
-// import { api } from '../api'; // habilitar quando integrar com a API
+import { MotoAPI } from '../api';
 
 const MOCK: Moto[] = [
   { id: '1', plate: 'ABC-1D23', model: 'Honda CG 160', status: 'EM_MANUTENCAO', yardSlot: 'A-12' },
@@ -22,9 +22,9 @@ export default function MotoListScreen({ navigation }: any) {
   const fetchData = async () => {
     try {
       setLoading(true);
-      // const res = await api.get<Motorcycle[]>('/motorcycles');
-      // setData(res.data);
-      await new Promise(r => setTimeout(r, 500));
+      const res = await MotoAPI.list();
+      setData(res.data);
+      await new Promise(r => setTimeout(r, 300));
       setData(MOCK);
     } finally {
       setLoading(false);
@@ -39,7 +39,7 @@ export default function MotoListScreen({ navigation }: any) {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Header
         title="Minhas Motos no Pátio"
-        subtitle="Localize e gerencie facilmente"
+        subtitle="Toque para ver detalhes"
         onAction={() => navigation.navigate('Camera')}
         actionLabel="Tirar foto"
       />
@@ -48,18 +48,21 @@ export default function MotoListScreen({ navigation }: any) {
         style={{ paddingHorizontal: spacing.md }}
         data={data}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <MotoCard moto={item} />}
+        renderItem={({ item }) => (
+          <MotoCard
+            moto={item}
+            onPress={() => navigation.navigate('MotoDetail', { id: item.id })}
+          />
+        )}
         ItemSeparatorComponent={() => <View style={{ height: spacing.sm }} />}
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={fetchData} tintColor={colors.text} />
-        }
+        refreshControl={<RefreshControl refreshing={loading} onRefresh={fetchData} tintColor={colors.text} />}
         contentContainerStyle={{ paddingVertical: spacing.md }}
       />
 
       <View style={{ padding: spacing.md }}>
         <MainButton
           label="Cadastrar moto"
-          onPress={() => {}}
+          onPress={() => navigation.navigate('CreateMoto')}
           accessibilityLabel="Cadastrar nova moto"
         />
       </View>
